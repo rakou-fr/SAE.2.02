@@ -8,20 +8,24 @@ def graph(n, a, b):
     génère une matrice de taille n*n, avec 50% de coef inf. et 50% de coef de poids 
     entier avec une intervalle de [a, b]
     """
-    total_elements = n * n
-    half = total_elements // 2
-
-    values = np.random.randint(a, b + 1, half)
-
-    elements = np.concatenate((np.full(half, float('inf')), values))
     
-    if total_elements % 2 != 0:
-        elements = np.append(elements, np.random.randint(a, b + 1))
+    if (type(a) == int and type(b) == int and type(n) == int and n > 0 and a <= b):
+        total_elements = n * n
+        half = total_elements // 2
 
-    np.random.shuffle(elements)
-    matrice = elements.reshape((n, n))
-    matrice = matrice.astype("float64")
+        values = np.random.randint(a, b + 1, half)
 
-    return matrice
+        elements = np.concatenate((np.full(half, float('inf')), values))
+        
+        if total_elements % 2 != 0:
+            elements = np.append(elements, np.random.randint(a, b + 1))
 
-print(graph(12, 10, 15))
+        np.random.shuffle(elements)
+        matrice = elements.reshape((n, n))
+        matrice = matrice.astype("float64")
+
+        return matrice
+    else:
+        return False
+
+# print(graph(14, 12, 15))
