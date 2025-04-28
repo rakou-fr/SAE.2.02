@@ -54,17 +54,3 @@ Bellman-Ford peut traiter des graphes avec des poids négatifs, ce qui n'est pas
 | **Gestion des erreurs**   | Échoue sur poids négatifs   | Détecte les cycles négatifs |
 | **Rapidité**              | Plus rapide pour les grands graphes sans poids négatifs | Moins rapide sur des graphes denses |
 | **Efficacité**            | Plus efficace sur les graphes denses et avec des poids positifs | Plus efficace pour les graphes avec des poids négatifs |
-
-## Exemple d'Exécution
-
-### Préparation du graphe
-
-Voici un exemple de graphe pour tester les algorithmes :
-
-```python
-graph = {
-    0: [(1, 2), (2, 4)],
-    1: [(2, 1), (3, 7)],
-    2: [(3, 3)],
-    3: []
-}
