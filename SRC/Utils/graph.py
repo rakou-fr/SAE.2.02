@@ -57,5 +57,69 @@ def graph2(n, p, a, b):
     else:
         return False
     
+def fermeture_transitive(M):
+    n = M.shape[0]
+    F = M.copy()
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                F[i, j] = F[i, j] or (F[i, k] and F[k, j])
+    return F
+
+def fc(M):
+    F = fermeture_transitive(M)
+    return np.all(F == True)    
+    
 # print(graph2(10, 0.5, 10, 100))
 # print(graph(14, 12, 15))
+M = np.array([[1, 1, 0], [0, 1, 1], [1, 0, 1]], dtype=bool)
+print(fc(M))
+
+
+import numpy as np
+
+def graph_bool(n, p=0.5):
+    """
+    Génère une matrice d'adjacence booléenne n x n, avec proportion p de 1 (arêtes) et 1-p de 0.
+    """
+    total = n * n
+    nb_ones = int(total * p)
+    nb_zeros = total - nb_ones
+    elements = np.array([1]*nb_ones + [0]*nb_zeros)
+    np.random.shuffle(elements)
+    M = elements.reshape((n, n)).astype(bool)
+
+    np.fill_diagonal(M, 1)
+    return M
+
+def fermeture_transitive(M):
+    n = M.shape[0]
+    F = M.copy()
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                F[i, j] = F[i, j] or (F[i, k] and F[k, j])
+    return F
+
+def fc(M):
+    F = fermeture_transitive(M)
+    return np.all(F == True)
+
+def test_stat_fc(n, essais=500):
+    """
+    Génère 'essais' matrices d'adjacence n x n avec 50% de 1 et teste la forte connexité.
+    Retourne le pourcentage de graphes fortement connexes.
+    """
+    count = 0
+    for _ in range(essais):
+        M = graph_bool(n, p=0.5)
+        if fc(M):
+            count += 1
+    pourcentage = 100 * count / essais
+    return pourcentage
+
+
+for n in range(2, 21):
+    pct = test_stat_fc(n, essais=300)
+    print(f"Pour n={n}, {pct:.1f}% de graphes fortement connexes")
+
